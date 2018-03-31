@@ -1,0 +1,15 @@
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+
+sudo apt-get update
+
+If you get below issue here -
+E: Malformed entry 1 in list file /etc/apt/sources.list.d/mongodb-org-3.6.list (Component)
+E: The list of sources could not be read.
+do (sudo rm /etc/apt/sources.list.d/mongodb-org-3.6.list)
+
+sudo apt-get install -y mongodb-org
+If above doesn’t work, give problem of authentication — (sudo apt-get install -y --allow-unauthenticated mongodb-org)
+#to run mongodb
+sudo service mongod start
+
+

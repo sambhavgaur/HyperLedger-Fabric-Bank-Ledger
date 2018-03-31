@@ -1,0 +1,48 @@
+#To install prerequisites on ubuntu
+curl -O https://hyperledger.github.io/composer/prereqs-ubuntu.sh
+chmod u+x prereqs-ubuntu.sh
+./prereqs-ubuntu.sh
+
+#Then needs to logout and login after:
+npm install -g composer-cli
+npm install -g composer-rest-server
+npm install -g generator-hyperledger-composer
+npm install -g yoS
+
+
+mkdir ~/fabric-tools && cd ~/fabric-tools
+
+curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
+unzip fabric-dev-servers.zip
+
+
+cd ~/fabric-tools
+./downloadFabric.sh
+
+cd ~/fabric-tools
+    ./startFabric.sh
+    ./createPeerAdminCard.sh
+
+
+mkdir ~/business-network && cd ~/business-network
+#You should download .bna file in this folder then run all commands below
+
+composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName crypto-network
+
+composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile crypto-network@0.0.1.bna --file networkadmin.card
+
+composer card import --file networkadmin.card
+
+#To check business network
+composer network ping --card admin@crypto-network
+
+
+Enter admin@crypto-network as the card name.
+
+Select never use namespaces when asked whether to use namespaces in the generated API.
+
+Select No when asked whether to secure the generated API.
+
+Select Yes when asked whether to enable event publication.
+
+Select No when asked whether to enable TLS security.	

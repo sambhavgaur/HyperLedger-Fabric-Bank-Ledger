@@ -1,0 +1,116 @@
+sudo apt-get update
+
+sudo apt-get install nginx
+
+
+#In this file: /etc/nginx/sites-available/default find line "root/var/html" and change to "/home/ubuntu/frontend" and "try_files $uri $uri/ =404;" to "try_files $uri $uri/ /index.html;
+#unzip dist_prod.zip then rename folder name to frontend and move to /home/ubuntu/
+
+
+sudo nano /etc/nginx/sites-available/backend
+
+#Put this inside of backend file
+server {
+  listen 8081;
+  server_name crypto-network;
+  location / {
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  Host       $http_host;
+    proxy_pass        http://127.0.0.1:3005;
+  }
+}
+CTRL+X then Y then enter
+
+
+
+sudo ln -s /etc/nginx/sites-available/backend /etc/nginx/sites-enabled/backend
+
+sudo ufw allow 3000
+sudo ufw allow 8081
+sudo ufw allow 'Nginx HTTP'
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo service nginx restart
+#To check status of nginx
+sudo service nginx status
+#from aws console change inbound rule. Open ports 80, 8081 and also 3000 should be open
+
+http://34.230.41.83
+
+Backend code in repository -
+https://github.com/kzbake/crypto-backend.git
+
+
+turn off your composer-rest-api first
+screen
+Run composer-rest-server
+
+then to detach this screen you should press Ctrl+A then immediately press D
+
+Screen -list
+
+Again do screen -
+go to ~/crypto-backend
+npm install
+node ./bin/www
+
+
+In postman
+Post request http://34.230.41.83:8081/api/v1/crypto/add-wallet
+Select raw with application/json
+
+Enter following -
+{
+
+"walletId": "Test1234545",
+
+"address": "pubaddress",
+
+"amount": 1067800
+
+}
+
+You can also go to front-end - http://34.230.41.83/#/send-to-db
+{
+
+"walletId": "Test1234545",
+
+"transfer": {
+
+"addressTo": "23234238234",
+
+"Amount": "400"
+
+},
+
+"transactionId":"34392342342",
+
+"Status": "complete”
+}
+
+Correct one - 
+{
+
+"walletId": "Test -Abhishek123",
+
+"transfer": {
+
+"addressTo": "23234238234",
+
+"Amount": "400"
+
+},
+
+"transactionId": "1134392342342",
+
+"Status": "complete"
+
+}
+
+
+Now you can access it from ui or fabric explorer —
+
+http://34.230.41.83:3000/explorer
+
+
+

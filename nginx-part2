@@ -1,0 +1,35 @@
+sudo apt-get update
+
+sudo apt-get install nginx
+
+#from amazon console open port 80
+
+#In this file: /etc/nginx/sites-available/default find line "root/var/html" and change to "/home/ubuntu/frontend"
+
+/etc/nginx/sites-available/default file
+
+in file we should replace one line "try_files $uri $uri/ =404;" to "try_files $uri $uri/ /index.html;"
+#unzip dist_prod.zip then rename folder name to frontend and move to /home/ubuntu/
+sambhav@ip-172-31-85-146:/home/ubuntu$ sudo mv dist_prod frontend
+
+
+scp -i /Users/sambhavgaur/Documents/Sambhav/cryptobank/Crypto-Bank-Prototype.pem dist_prod.zip ubuntu@ec2-184-72-113-124.compute-1.amazonaws.com:/home/ubuntu/.
+
+sudo unzip dist_prod.zip
+
+
+sudo ufw allow 3000
+
+sudo ufw allow 8081
+
+then sudo ufw enable
+
+then you can check status sudo ufw status
+http://34.230.41.83/
+
+after restart nginx sudo service nginx restart
+
+
+Sudo apt-get install screen
+
+Sudo screen
